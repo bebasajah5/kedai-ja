@@ -40,7 +40,7 @@ export default function AdminBestSeller() {
       setLoading(false);
     } catch (error) {
       console.error('Error fetching menu items:', error);
-      setError('Failed to load menu items');
+      setError('Gagal memuat data menu');
       setLoading(false);
     }
   };
@@ -57,13 +57,13 @@ export default function AdminBestSeller() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to update menu item');
+        throw new Error('Gagal memperbarui menu');
       }
 
       setSuccess(isBestSeller ? 'Menu berhasil ditambahkan ke Best Seller' : 'Menu berhasil dihapus dari Best Seller');
       fetchMenuItems();
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Something went wrong');
+      setError(error instanceof Error ? error.message : 'Terjadi kesalahan');
     } finally {
       setUpdating(false);
     }
@@ -96,7 +96,7 @@ export default function AdminBestSeller() {
       setShowModal(false);
       fetchMenuItems();
     } catch (error) {
-      setError('Failed to update menu items');
+      setError('Gagal memperbarui menu');
     } finally {
       setUpdating(false);
     }
@@ -117,7 +117,7 @@ export default function AdminBestSeller() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center py-16">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading best seller menu...</p>
+          <p className="mt-4 text-gray-600">Memuat data menu best seller...</p>
         </div>
       </div>
     );
@@ -145,8 +145,8 @@ export default function AdminBestSeller() {
       </div>
 
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Management Menu Best Seller</h1>
-        <p className="text-gray-600 mt-2">Kelola menu yang ditampilkan sebagai best seller di homepage</p>
+        <h1 className="text-3xl font-bold text-gray-900">Kelola Menu Best Seller</h1>
+        <p className="text-gray-600 mt-2">Kelola menu yang ditampilkan sebagai best seller di halaman utama</p>
       </div>
 
       {error && (
@@ -162,7 +162,7 @@ export default function AdminBestSeller() {
         </div>
       )}
 
-      {/* Statistics */}
+      {/* Statistik */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-center justify-between">
@@ -191,7 +191,7 @@ export default function AdminBestSeller() {
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Limit Homepage</p>
+              <p className="text-sm font-medium text-gray-600">Batas Halaman Utama</p>
               <p className="text-3xl font-bold text-gray-900">6</p>
             </div>
             <div className="bg-green-100 rounded-full p-3">
@@ -201,7 +201,7 @@ export default function AdminBestSeller() {
         </div>
       </div>
 
-      {/* Current Best Seller Items */}
+      {/* Menu Best Seller Saat Ini */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Menu Best Seller Saat Ini</h2>
         
@@ -209,7 +209,7 @@ export default function AdminBestSeller() {
           <div className="text-center py-12">
             <Star className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Belum ada menu best seller</h3>
-            <p className="text-gray-600 mb-4">Tambahkan menu untuk ditampilkan di homepage</p>
+            <p className="text-gray-600 mb-4">Tambahkan menu untuk ditampilkan di halaman utama</p>
             <button
               onClick={() => setShowModal(true)}
               className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition-colors duration-200"
@@ -260,7 +260,7 @@ export default function AdminBestSeller() {
         )}
       </div>
 
-      {/* Modal for adding best seller */}
+      {/* Modal untuk menambah best seller */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-4xl mx-4 max-h-[80vh] overflow-hidden flex flex-col">
@@ -280,7 +280,7 @@ export default function AdminBestSeller() {
 
             <div className="mb-4">
               <p className="text-gray-600">
-                Pilih menu yang ingin ditambahkan sebagai best seller. Menu yang dipilih akan tampil di homepage.
+                Pilih menu yang ingin ditambahkan sebagai best seller. Menu yang dipilih akan tampil di halaman utama.
               </p>
               {selectedItems.length > 0 && (
                 <p className="text-sm text-orange-600 mt-2">
