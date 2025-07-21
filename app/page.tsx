@@ -13,6 +13,7 @@ interface MenuItem {
   category: 'Makanan' | 'Minuman';
   image?: string;
   available: boolean;
+  isBestSeller: boolean;
 }
 
 interface Settings {
@@ -25,7 +26,7 @@ interface Settings {
 }
 
 export default function Home() {
-  const [featuredItems, setFeaturedItems] = useState<MenuItem[]>([]);
+  const [bestSellerItems, setBestSellerItems] = useState<MenuItem[]>([]);
   const [settings, setSettings] = useState<Settings | null>(null);
   const [loading, setLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -93,8 +94,8 @@ export default function Home() {
         }
       };
 
-      const availableItems = menuData.menuItems?.filter((item: MenuItem) => item.available) || [];
-      setFeaturedItems(availableItems.slice(0, 3));
+      const bestSellerItems = menuData.menuItems?.filter((item: MenuItem) => item.available && item.isBestSeller) || [];
+      setBestSellerItems(bestSellerItems.slice(0, 6));
       setSettings(settingsData.settings || {
         restaurantName: 'Kedai J.A',
         description: 'Nikmati cita rasa autentik Indonesia dengan resep turun-temurun yang telah diwariskan dari generasi ke generasi',
@@ -275,34 +276,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Menu Section */}
-      <section className="py-16">
+      {/* Best Seller Menu Section */}
+      <section className="py-16 bg-gradient-to-br from-orange-100 via-yellow-50 to-orange-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Menu Unggulan
+              Menu Best Seller
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Cicipi hidangan terbaik kami yang telah menjadi favorit pelanggan
+              Menu pilihan terbaik yang paling disukai pelanggan kami
             </p>
           </div>
 
-          {featuredItems.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {featuredItems.map((item) => (
-                <div key={item._id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+          {bestSellerItems.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {bestSellerItems.map((item) => (
+                <div key={item._id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 group">
                   <div className="h-48 bg-gradient-to-br from-orange-400 to-red-400 flex items-center justify-center">
                     {item.image ? (
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
                     ) : (
                       <ChefHat className="h-16 w-16 text-white" />
                     )}
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.name}</h3>
-                    <p className="text-gray-600 mb-4">{item.description}</p>
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-xl font-bold text-gray-900">{item.name}</h3>
+                      <span className="bg-gradient-to-r from-orange-400 to-red-400 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        BEST SELLER
+                      </span>
+                    </div>
+                    <p className="text-gray-600 mb-4 text-sm leading-relaxed">{item.description}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold text-orange-500">
+                      <span className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
                         Rp {item.price.toLocaleString('id-ID')}
                       </span>
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
@@ -320,14 +326,14 @@ export default function Home() {
           ) : (
             <div className="text-center py-12">
               <ChefHat className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600">Menu unggulan akan segera hadir</p>
+              <p className="text-gray-600">Menu best seller akan segera hadir</p>
             </div>
           )}
 
           <div className="text-center">
             <Link
               href="/menu"
-              className="bg-orange-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors duration-200 inline-flex items-center"
+              className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-4 rounded-full font-semibold hover:from-orange-600 hover:to-red-600 transition-all duration-200 inline-flex items-center shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               Lihat Semua Menu
               <ArrowRight className="ml-2 h-5 w-5" />

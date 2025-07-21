@@ -18,17 +18,18 @@ export async function PUT(
 
     await connectDB();
     
-    const { name, description, price, category, image, available } = await request.json();
+    const { name, description, price, category, image, available, isBestSeller } = await request.json();
 
     const menuItem = await MenuItem.findByIdAndUpdate(
       params.id,
       {
-        name,
-        description,
-        price,
-        category,
-        image: image || '',
-        available: available !== undefined ? available : true,
+        ...(name !== undefined && { name }),
+        ...(description !== undefined && { description }),
+        ...(price !== undefined && { price }),
+        ...(category !== undefined && { category }),
+        ...(image !== undefined && { image: image || '' }),
+        ...(available !== undefined && { available }),
+        ...(isBestSeller !== undefined && { isBestSeller }),
       },
       { new: true }
     );

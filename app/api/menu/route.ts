@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
 
     await connectDB();
     
-    const { name, description, price, category, image, available } = await request.json();
+    const { name, description, price, category, image, available, isBestSeller } = await request.json();
 
     const menuItem = new MenuItem({
       name,
@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
       category,
       image: image || '',
       available: available !== undefined ? available : true,
+      isBestSeller: isBestSeller !== undefined ? isBestSeller : false,
     });
 
     await menuItem.save();
