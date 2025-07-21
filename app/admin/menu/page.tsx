@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Plus, Edit, Trash2, ChefHat, AlertCircle, X } from 'lucide-react';
+import { Plus, Edit, Trash2, ChefHat, AlertCircle, X, Star } from 'lucide-react';
+import Link from 'next/link';
 
 interface MenuItem {
   _id: string;
@@ -163,13 +164,22 @@ export default function AdminMenu() {
           <h1 className="text-3xl font-bold text-gray-900">Menu Management</h1>
           <p className="text-gray-600 mt-2">Kelola menu makanan dan minuman</p>
         </div>
-        <button
-          onClick={() => setShowForm(true)}
-          className="bg-orange-500 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-orange-600 transition-colors duration-200"
-        >
-          <Plus className="h-4 w-4" />
-          <span>Add Menu Item</span>
-        </button>
+        <div className="flex space-x-3">
+          <Link
+            href="/admin/menu/best-seller"
+            className="bg-yellow-500 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-yellow-600 transition-colors duration-200"
+          >
+            <Star className="h-4 w-4" />
+            <span>Tambah Best Seller</span>
+          </Link>
+          <button
+            onClick={() => setShowForm(true)}
+            className="bg-orange-500 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-orange-600 transition-colors duration-200"
+          >
+            <Plus className="h-4 w-4" />
+            <span>Add Menu Item</span>
+          </button>
+        </div>
       </div>
 
       {error && (
